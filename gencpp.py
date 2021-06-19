@@ -15,7 +15,7 @@ class CppProject:
         self._gen_root_directory()
         self._gen_src_directory()
         self._gen_test_directory()
-        # self._gen_build_directory()
+        self._gen_build_directory()
 
         self._init_git_repository()
 
@@ -62,6 +62,8 @@ option(BUILD_TEST "Build the test program" ON)
 if(EXISTS ${{CMAKE_BINARY_DIR}}/conanbuildinfo.cmake)
     include(${{CMAKE_BINARY_DIR}}/conanbuildinfo.cmake)
     conan_basic_setup(TARGETS)
+else()
+    message(WARNING "The file conanbuildinfo.cmake doesn't exist, you have to run conan install first")
 endif()
 
 include_directories(${{CMAKE_SOURCE_DIR}}/include)
@@ -78,6 +80,7 @@ endif()
         conan_file = """[requires]
 
 [generators]
+cmake
 """
         self._write_file("", "conanfile.txt", conan_file)
 
@@ -105,12 +108,12 @@ int main() {
         # CMakeLists.txt
         self._write_file("test/", "CMakeLists.txt", "")
 
-    # def _gen_build_directory(self) -> None:
-    #     self._create_directory("./build/")
+    def _gen_build_directory(self) -> None:
+        self._create_directory("./build/")
 
-    #     install_folder = os.path.join(self.path, "build")
-    #     cmd = f"conan install -if {install_folder} {self.path}"
-    #     print(os.popen(cmd).read(), end='')
+        install_folder = os.path.join(self.path, "build")
+        cmd = f"conan install -if {install_folder} {self.path}"
+        print(os.popen(cmd).read(), end='')
 
     def _init_git_repository(self) -> None:
         cmd = f"git init {self.path}"
