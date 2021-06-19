@@ -30,7 +30,7 @@ AccessModifierOffset: -4
 ColumnLimit: 0
 PointerAlignment: Left
 """
-        self._write_file("./", ".clang-format", clang_format)
+        self._write_file("", ".clang-format", clang_format)
 
         # .gitignore
         git_ignore = """# VS Code
@@ -47,7 +47,7 @@ PointerAlignment: Left
 /cmake-build-debug
 /cmake-build-release
 """
-        self._write_file("./", ".gitignore", git_ignore)
+        self._write_file("", ".gitignore", git_ignore)
 
         # CMakeLists.txt
         cmake_lists = f"""cmake_minimum_required(VERSION 3.1.2)
@@ -72,19 +72,19 @@ if(BUILD_TEST)
     add_subdirectory(test)
 endif()
 """
-        self._write_file("./", "CMakeLists.txt", cmake_lists)
+        self._write_file("", "CMakeLists.txt", cmake_lists)
 
         # conanfile.txt
         conan_file = """[requires]
 
 [generators]
 """
-        self._write_file("./", "conanfile.txt", conan_file)
+        self._write_file("", "conanfile.txt", conan_file)
 
         # README.md
         readme = f"""# {self.name}
 """
-        self._write_file("./", "README.md", readme)
+        self._write_file("", "README.md", readme)
 
     def _gen_src_directory(self) -> None:
         # main.cpp
@@ -94,16 +94,16 @@ int main() {
     std::cout << "Hello World!\\n";
 }
 """
-        self._write_file("./src/", "main.cpp", main)
+        self._write_file("src/", "main.cpp", main)
 
         # CMakeLists.txt
         cmake_lists = """add_executable(${CMAKE_PROJECT_NAME} main.cpp)
 """
-        self._write_file("./src/", "CMakeLists.txt", cmake_lists)
+        self._write_file("src/", "CMakeLists.txt", cmake_lists)
 
     def _gen_test_directory(self) -> None:
         # CMakeLists.txt
-        self._write_file("./test/", "CMakeLists.txt", "")
+        self._write_file("test/", "CMakeLists.txt", "")
 
     # def _gen_build_directory(self) -> None:
     #     self._create_directory("./build/")
