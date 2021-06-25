@@ -14,8 +14,8 @@ class CppProject:
     def generate(self) -> None:
         self._gen_root_directory()
         self._gen_src_directory()
-        self._gen_test_directory()
-        self._gen_build_directory()
+        # self._gen_test_directory()
+        # self._gen_build_directory()
 
         self._init_git_repository()
 
@@ -54,10 +54,8 @@ PointerAlignment: Left
 
 project({self.name})
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-option(BUILD_TEST "Build the test program" ON)
 
 if(EXISTS ${{CMAKE_BINARY_DIR}}/conanbuildinfo.cmake)
     include(${{CMAKE_BINARY_DIR}}/conanbuildinfo.cmake)
@@ -66,13 +64,7 @@ else()
     message(WARNING "The file conanbuildinfo.cmake doesn't exist, you have to run conan install first")
 endif()
 
-include_directories(${{CMAKE_SOURCE_DIR}}/include)
-
 add_subdirectory(src)
-
-if(BUILD_TEST)
-    add_subdirectory(test)
-endif()
 """
         self._write_file("", "CMakeLists.txt", cmake_lists)
 
@@ -85,9 +77,9 @@ cmake
         self._write_file("", "conanfile.txt", conan_file)
 
         # README.md
-        readme = f"""# {self.name}
-"""
-        self._write_file("", "README.md", readme)
+#         readme = f"""# {self.name}
+# """
+#         self._write_file("", "README.md", readme)
 
     def _gen_src_directory(self) -> None:
         # main.cpp
