@@ -57,12 +57,16 @@ project({self.name})
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-if(EXISTS ${{CMAKE_BINARY_DIR}}/conanbuildinfo.cmake)
-    include(${{CMAKE_BINARY_DIR}}/conanbuildinfo.cmake)
-    conan_basic_setup(TARGETS)
-else()
-    message(WARNING "The file conanbuildinfo.cmake doesn't exist, you have to run conan install first")
-endif()
+########### Conan Package Manager ###########################################################
+#############################################################################################
+
+list(APPEND CMAKE_MODULE_PATH ${{CMAKE_BINARY_DIR}})
+list(APPEND CMAKE_PREFIX_PATH ${{CMAKE_BINARY_DIR}})
+
+# Add `find_package` here
+
+#############################################################################################
+########### Conan Package Manager End #######################################################
 
 add_subdirectory(src)
 """
@@ -72,7 +76,7 @@ add_subdirectory(src)
         conan_file = """[requires]
 
 [generators]
-cmake
+cmake_find_package
 """
         self._write_file("", "conanfile.txt", conan_file)
 
