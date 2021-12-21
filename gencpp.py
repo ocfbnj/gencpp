@@ -45,7 +45,11 @@ PointerAlignment: Left
 # CLion
 /.idea
 /cmake-build-debug
+/cmake-build-debug-coverage
 /cmake-build-release
+
+# Mac OS
+.DS_Store
 """
         self._write_file("", ".gitignore", git_ignore)
 
